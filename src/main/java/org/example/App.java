@@ -12,7 +12,7 @@ public class App
         System.out.printf("%n");
         selectAllDemo();
         System.out.printf("%n");
-        updateStudentDemo();
+        updateStudentDemo(11);
         System.out.printf("%n");
         selectAllDemo();
         System.out.printf("%n");
@@ -20,11 +20,17 @@ public class App
         System.out.printf("%n");
         selectAllDemo();
         System.out.printf("%n");
-        findAllByNameLike("Kel");
+        findAllByNameLike("Zeck");
         System.out.printf("%n");
 
     }
 
+    /**
+     * In dieser Klasse sucht man einen bestimmten Namen und alle
+     * Namensspalten werden dann ausgegeben die diesem entsprechen.
+     *
+     * @param pattern = Name den man eingibt.
+     */
     public static void findAllByNameLike(String pattern) {
 
         // Hier sind die ganzen Attribute zum Verbinden
@@ -56,6 +62,11 @@ public class App
         }
     }
 
+    /**
+     * In dieser Klasse kann man bestimmte Daten löschen mittels der ID
+     *
+     * @param studentID = ID von Datensätzen
+     */
     public static void deleteStudentDemo(int studentID) {
         // Hier sind die ganzen Attribute zum Verbinden
         System.out.println("Delete Demo mit JDBC");
@@ -88,7 +99,11 @@ public class App
         }
     }
 
-    public static void updateStudentDemo() {
+    /**
+     * In dieser Klasse kann man gewisse Daten updaten
+     *
+     */
+    public static void updateStudentDemo(int id) {
 
         // Hier sind die ganzen Attribute zum Verbinden
         System.out.println("Update Demo mit JDBC");
@@ -101,7 +116,7 @@ public class App
         try(Connection conn = DriverManager.getConnection(connectionURL, user, pswrd)) {
             System.out.println("Verbindung zur Datenbank hergestellt!");
             PreparedStatement preparedStatement = conn.prepareStatement(
-                    "UPDATE `student` SET `name` = ?, `email` = ? WHERE `student`.`id` = 4" // Diese Fragezeichen müssen sein
+                    "UPDATE `student` SET `name` = ?, `email` = ? WHERE `student`.`id` = id" // Diese Fragezeichen müssen sein
             );
 
             // Den Update-Befehl muss man ebenfalls in einen try-catch block machen da hier auch fehler entstehen können.
@@ -122,6 +137,9 @@ public class App
         }
     }
 
+    /**
+     * Man kann in vorhandene Datensätzen Daten hineinfügen
+     */
     public static void insertStudentDemo() {
 
         // Hier sind die ganzen Attribute zum Verbinden
@@ -157,6 +175,9 @@ public class App
         }
     }
 
+    /**
+     * Gibt alle Datensätze aus die gerade existieren
+     */
     public static void selectAllDemo() {
 
         // Hier sind die ganzen Attribute zum Verbinden
