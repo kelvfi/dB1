@@ -19,7 +19,41 @@ public class App
         deleteStudentDemo(6);
         System.out.printf("%n");
         selectAllDemo();
+        System.out.printf("%n");
+        findAllByNameLike("Kel");
+        System.out.printf("%n");
 
+    }
+
+    public static void findAllByNameLike(String pattern) {
+
+        // Hier sind die ganzen Attribute zum Verbinden
+        System.out.println("Find Demo mit JDBC");
+        String connectionURL = "jdbc:mysql://localhost:3306/jdbcdemo";
+        String user = "root";
+        String pswrd = "";
+
+        // Hier wird die Verbindung zur MySQL Datenbank hergestellt
+        // Die Verbindung muss in einem try-catch block erfolgen, falls ein fehler vorliegt
+        try(Connection conn = DriverManager.getConnection(connectionURL, user, pswrd)) {
+            System.out.println("Verbindung zur Datenbank hergestellt!");
+
+            PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM `student` WHERE `student`.`name` LIKE ?;");
+            preparedStatement.setString(1,"%"+pattern+"%");
+            ResultSet rs = preparedStatement.executeQuery(); // Hier holt er es sich
+
+            // Funktioniert wie die Foreach schleife.
+            // Ganz unten werden dann die ganzen Studenten ausgegeben mit ID, NAME und EMAIL
+            while(rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                System.out.println("Student | ID: "+id+" NAME: "+name+" EMAIL: "+email);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Fehler beim verbinden der Datenbank: "+e.getMessage());
+        }
     }
 
     public static void deleteStudentDemo(int studentID) {
